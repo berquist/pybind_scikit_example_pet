@@ -11,3 +11,23 @@ def test_add():
 
 def test_sub():
     assert m.subtract(1, 2) == -1
+
+
+def test_pet():
+    name = "Bob"
+    age = 12
+    pet = m.Pet(name, age)
+    print(dir(pet))
+    help(pet.set_name)
+    help(pet.get_name)
+    help(pet.set)
+    # print(pet.name)
+    # print(pet.age)
+
+
+def test_dog():
+    # dog = m.Dog("Steve", 9)
+    name = "Steve"
+    age = 9
+    dog = m.Dog(name, age)
+    print(dog.bark())
