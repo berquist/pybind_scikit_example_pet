@@ -50,6 +50,12 @@ PYBIND11_MODULE(_core, m) {
     m.attr("__version__") = "dev";
 #endif
 
+    py::class_<holder<int>>(m, "holder_int")
+        .def(py::init());
+
+    py::class_<holder<std::string>>(m, "holder_string")
+        .def(py::init());
+
     // dynamic_attr here causes segfault for Dog?
     py::class_<Pet> pet(m, "Pet");
     pet.def(py::init<const std::string &, int>())
@@ -59,6 +65,11 @@ PYBIND11_MODULE(_core, m) {
         // .def("set", static_cast<void (Pet::*)(const std::string &)>(&Pet::set), "Set the pet's name")
         .def("set", overload_cast_<int>()(&Pet::set), "Set the pet's age")
         .def("set", overload_cast_<const std::string &>()(&Pet::set), "Set the pet's name")
+        // When overload_cast_ can't deduce the return type, resort to the function pointer.
+        // .def("mymethod", overload_cast_<std::string>()(&Pet::mymethod), "hello")
+        .def("mymethod", static_cast<bool (Pet::*)(const holder<int> &) const>(&Pet::mymethod), "hello holder int")
+        .def("mymethod", static_cast<bool (Pet::*)(const holder<std::string> &) const>(&Pet::mymethod), "hello holder string")
+        .def("mymethod", static_cast<bool (Pet::*)(const std::string &) const>(&Pet::mymethod), "hello")
         ;
 
     py::class_<Dog>(m, "Dog", pet)

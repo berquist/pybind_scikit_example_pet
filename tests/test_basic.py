@@ -23,6 +23,7 @@ def test_pet():
     help(pet.set)
     # print(pet.name)
     # print(pet.age)
+    help(pet.mymethod)
 
 
 def test_dog():
