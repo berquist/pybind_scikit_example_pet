@@ -14,18 +14,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform:
-          - windows-latest
-          - macos-latest
-          - ubuntu-latest
-        python-version:
-          - "3.9"
-          - "3.12"
+        platform: [windows-latest, macos-13, ubuntu-latest]
+        python-version: ["3.7", "3.12", "pypy-3.9"]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
-    - uses: actions/setup-python@v4
+    - uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
 
